@@ -33,19 +33,19 @@ class LinearRegression(object):
 
         # Do gradient descent for n_iterations
         for _ in range(self.n_iterations):
-            y_pred = X.dot(self.w)
+            y_pred = X @ self.w
             # Calculate l2 loss
             mse = np.mean(0.5 * (y - y_pred)**2)
             self.training_errors.append(mse)
             # Gradient of l2 loss w.r.t w
-            grad_w = -(y - y_pred).dot(X)
+            grad_w = -(y - y_pred) @ X
             # Update the weights
             self.w -= self.learning_rate * grad_w
 
     def predict(self, X):
         # Insert constant ones for bias weights
         X = np.insert(X, 0, 1, axis=1)
-        y_pred = X.dot(self.w)
+        y_pred = X @ self.w
         return y_pred
 
 
