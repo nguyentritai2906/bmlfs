@@ -1,39 +1,37 @@
-import sys
-import getopt
+import argparse
+
 import matplotlib.pyplot as plt
 from sklearn.datasets import make_regression
 
 from supervised_learning.regression import LinearRegression
-from utils.regression import mean_squared_error, train_test_split
+from utils.data_operation import mean_squared_error, train_test_split
 
 
-def main(argv):
+def main():
 
-    SEED = 42
-    GRADIENT = True
-    EPOCH = 100
-    LEARNING_RATE = 0.01
+    parser = argparse.ArgumentParser(
+        description='Linear Regression model implementation from scratch')
+    parser.add_argument("-s", "--seed", type=int, default=42)
+    parser.add_argument("-g", "--gradient", type=eval, default=True)
+    parser.add_argument("-e", "--epoch", type=int, default=100)
+    parser.add_argument("-l", "--lr", type=float, default=0.01)
 
-    try:
-        opts, args = getopt.getopt(argv, "hs:g:e:l:", ["seed=", "gradient=", "epoch=", "learning-rate="])
-    except getopt.GetoptError:
-        sys.exit(2)
-    for opt, arg in opts:
-        if opt == '-h':
-            print('linear_regression.py -s <seed> -g <gradient> -e <epoch> -l <learning_rate>')
-            sys.exit()
-        elif opt in ("-s", "--seed"):
-            SEED = int(arg)
-        elif opt in ("-g", "--gradient"):
-            GRADIENT = eval(arg)
-        elif opt in ("-e", "--epoch"):
-            EPOCH = int(arg)
-        elif opt in ("-l", "--learning-rate"):
-            LEARNING_RATE = float(arg)
+    args = parser.parse_args()
 
-    X, y = make_regression(n_samples=100, n_features=1, noise=20, random_state=SEED)
+    SEED = args.seed
+    GRADIENT = args.gradient
+    EPOCH = args.epoch
+    LEARNING_RATE = args.lr
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4, seed=SEED)
+    X, y = make_regression(n_samples=100,
+                           n_features=1,
+                           noise=20,
+                           random_state=SEED)
+
+    X_train, X_test, y_train, y_test = train_test_split(X,
+                                                        y,
+                                                        test_size=0.4,
+                                                        seed=SEED)
 
     model = LinearRegression(n_iterations=EPOCH,
                              learning_rate=LEARNING_RATE,
@@ -78,4 +76,4 @@ def main(argv):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    main()
