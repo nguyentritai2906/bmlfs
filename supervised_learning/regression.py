@@ -12,7 +12,7 @@ class l1_regulation():
         self.alpha = alpha
 
     def __call__(self, w):
-        return self.alpha * np.linalg.norm(w)
+        return self.alpha * np.linalg.norm(w, 1)  # np.max(np.sum(np.abs(w), axis=0))
 
     def grad(self, w):
         return self.alpha * np.sign(w)
