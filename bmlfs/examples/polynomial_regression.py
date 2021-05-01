@@ -6,9 +6,9 @@ import numpy as np
 import pandas as pd
 from sklearn.datasets import make_regression
 
-from supervised_learning.regression import PolynomialRegression, PolynomialRidgeRegression
-from utils.data_operation import mean_squared_error, train_test_split
-from utils.data_manipulation import k_fold_cross_validation_sets
+from bmlfs.supervised_learning.regression import PolynomialRegression, PolynomialRidgeRegression
+from bmlfs.utils.data_operation import mean_squared_error, train_test_split
+from bmlfs.utils.data_manipulation import k_fold_cross_validation_sets
 
 
 def main():

@@ -2,7 +2,8 @@ import math
 
 import numpy as np
 
-from utils.data_manipulation import normalize, polynomial_features
+from bmlfs.utils import normalize, polynomial_features, make_diagonal
+from bmlfs.deep_learning import Sigmoid
 
 
 class l1_regulation():
@@ -35,15 +36,15 @@ class Regression(object):
     """ Base regression model. Models the relationship between a scalar dependent variable y and the independent variable X.
     Parameters:
     -----------
-    n_iterations: int
+    n_iter: int
         The number of training iterations the algorithm will tune the weights for.
-    learning_rate: float
+    lr: float
         The step length that will be used when updating the weights.
     """
 
-    def __init__(self, n_iterations=100, learning_rate=0.001):
-        self.n_iterations = n_iterations
-        self.learning_rate = learning_rate
+    def __init__(self, n_iter=100, lr=0.001):
+        self.n_iter = n_iter
+        self.lr = lr
 
     def initialize_weights(self, n_features):
         """ Initialize weights randomly using Xavier Initialization method [-1/N, 1/N] """
@@ -58,7 +59,7 @@ class Regression(object):
         self.m, self.n = X_b.shape
 
         # Do gradient descent for n_iterations
-        for _ in range(self.n_iterations):
+        for _ in range(self.n_iter):
             y_pred = X_b @ self.w
             # Calculate l2 loss
             mse = np.mean(0.5 * (y - y_pred)**2)
@@ -66,7 +67,7 @@ class Regression(object):
             # Gradient of l2 loss w.r.t w
             grad_w = 2 / self.m * X_b.T @ (y_pred - y)
             # Update the weights
-            self.w -= self.learning_rate * grad_w
+            self.w -= self.lr * grad_w
 
     def predict(self, X):
         # Insert constant ones for bias weights
@@ -79,23 +80,23 @@ class LinearRegression(Regression):
     """ Linear regression model.
     Parameters:
     -----------
-    n_iterations: int
+    n_iter: int
         The number of training iterations the algorithm will tune the weights for.
-    learning_rate: float
+    lr: float
         The step length that will be used when updating the weights.
     gradient_descent: boolean
         True or false depending if gradient descent should be used when training. If false then we use batch optimization by least squares.
     """
 
     def __init__(self,
-                 n_iterations=100,
-                 learning_rate=0.001,
+                 n_iter=100,
+                 lr=0.001,
                  gradient_descent=True):
         self.gradient_descent = gradient_descent
         self.regularization = lambda _: 0
         self.regularization.grad = lambda _: 0
-        super(LinearRegression, self).__init__(n_iterations=n_iterations,
-                                               learning_rate=learning_rate)
+        super(LinearRegression, self).__init__(n_iter=n_iter,
+                                               lr=lr)
 
     def fit(self, X, y):
         # If not gradient_descent => Least squares approximation of w
@@ -121,19 +122,19 @@ class PolynomialRegression(Regression):
     -----------
     degree: int
         The degree of the polynomial that the independent variable X will be transformed to.
-    n_iterations: float
+    n_iter: float
         The number of training iterations the algorithm will tune the weights for.
-    learning_rate: float
+    lr: float
         The step length that will be used when updating the weights.
     """
 
-    def __init__(self, degree, n_iterations=3000, learning_rate=0.001):
+    def __init__(self, degree, n_iter=3000, lr=0.001):
         self.degree = degree
         # No regularization
         self.regularization = lambda x: 0
         self.regularization.grad = lambda x: 0
-        super(PolynomialRegression, self).__init__(n_iterations=n_iterations,
-                                                   learning_rate=learning_rate)
+        super(PolynomialRegression, self).__init__(n_iter=n_iter,
+                                                   lr=lr)
 
     def fit(self, X, y):
         X = polynomial_features(X, degree=self.degree)
@@ -151,15 +152,15 @@ class RidgeRegression(Regression):
     -----------
     reg_factor: float
         The factor that will determine the amount of regularization and feature shrinkage.
-    n_iterations: int
+    n_iter: int
         The number of training iterations the algorithm will tune the weights for.
-    learning_rate: float
+    lr: float
         The step length that will be used when updating the weights.
     """
 
-    def __init__(self, reg_factor, n_iterations=1000, learning_rate=0.001):
+    def __init__(self, reg_factor, n_iter=1000, lr=0.001):
         self.regularization = l2_regularization(alpha=reg_factor)
-        super(RidgeRegression, self).__init__(n_iterations, learning_rate)
+        super(RidgeRegression, self).__init__(n_iter, lr)
 
 
 class PolynomialRidgeRegression(Regression):
@@ -170,22 +171,22 @@ class PolynomialRidgeRegression(Regression):
         The degree of the polynomial that the independent variance X will be transformed to.
     reg_factor: float
         The factor that will determine the amount of regularization and feature shrinkage.
-    n_iterations: float
+    n_iter: float
         The number of training iterations the algorithm will tune the weights for.
-    learning_rate: float
+    lr: float
         The step length that will be used when updating the weights.
     """
 
     def __init__(self,
                  degree,
                  reg_factor,
-                 n_iterations=3000,
-                 learning_rate=0.01,
+                 n_iter=3000,
+                 lr=0.01,
                  gradient_descent=True):
         self.degree = degree
         self.regularization = l2_regularization(alpha=reg_factor)
         super(PolynomialRidgeRegression,
-              self).__init__(n_iterations, learning_rate)
+              self).__init__(n_iter, lr)
 
     def fit(self, X, y):
         X = normalize(polynomial_features(X, degree=self.degree))
@@ -194,3 +195,50 @@ class PolynomialRidgeRegression(Regression):
     def predict(self, X):
         X = normalize(polynomial_features(X, degree=self.degree))
         return super(PolynomialRidgeRegression, self).predict(X)
+
+
+class LogisticRegression():
+    """ Logistic Regression classifier.
+    Parameters:
+    -----------
+    lr: float
+        The step length that will be taken when following the negative gradient during
+        training.
+    """
+
+    def __init__(self, lr=0.1, n_iter=100000, verbose=False):
+        self.w = None
+        self.lr = lr
+        self.n_iter = n_iter
+        self.verbose = verbose
+
+    def __sigmoid(self, z):
+        sigmoid = Sigmoid()
+        return sigmoid(z)
+
+    def fit(self, X, y):
+        X_b = np.insert(X, 0, 1, axis=1)
+
+        # Initialize weights
+        self.w = np.zeros(X_b.shape[1])
+
+        # Tune parameters for n iterations
+        for i in range(self.n_iter):
+            # Make a new prediction
+            y_pred = self.__sigmoid(X_b @ self.w)
+            # Move against the gradient of the loss function with
+            # respect to the parameters to minimize the loss
+            grad_w = ((y_pred - y) @ X_b) / y.size
+            self.w -= self.lr * grad_w
+
+            if (self.verbose == True and i % 1000 == 0):
+                y_pred = self.__sigmoid(X_b @ self.w)
+                print(f'loss: {y_pred} \t')
+
+    def predict_proba(self, X):
+        X_b = np.insert(X, 0, 1, axis=1)
+
+        return self.__sigmoid(X_b @ self.w)
+
+    def predict(self, X):
+        return np.round(self.predict_proba(X)).astype(int)

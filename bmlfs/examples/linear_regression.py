@@ -3,8 +3,8 @@ import argparse
 import matplotlib.pyplot as plt
 from sklearn.datasets import make_regression
 
-from supervised_learning.regression import LinearRegression
-from utils.data_operation import mean_squared_error, train_test_split
+from bmlfs.supervised_learning.regression import LinearRegression
+from bmlfs.utils.data_operation import mean_squared_error, train_test_split
 
 
 def main():
