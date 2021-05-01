@@ -33,7 +33,7 @@ def main():
     REGULARIZE = args.regularize
     REG_RANGE = args.reg_range
 
-    data = pd.read_csv('data/TempLinkoping2016.txt', sep="\t")
+    data = pd.read_csv('bmlfs/data/TempLinkoping2016.txt', sep="\t")
 
     time = np.atleast_2d(data['time'].values).T
     temp = data['temp'].values
@@ -53,7 +53,7 @@ def main():
             cross_validation_sets = k_fold_cross_validation_sets(X_train, y_train, n_fold=N_FOLD)
             mse = 0
             for _X_train, _X_test, _y_train, _y_test in cross_validation_sets:
-                model = PolynomialRidgeRegression(degree=DEGREE, reg_factor=reg_factor, learning_rate=LEARNING_RATE, n_iterations=N_ITERATIONS)
+                model = PolynomialRidgeRegression(degree=DEGREE, reg_factor=reg_factor, lr=LEARNING_RATE, n_iter=N_ITERATIONS)
                 model.fit(_X_train, _y_train)
                 y_pred = model.predict(_X_test)
                 _mse = mean_squared_error(_y_test, y_pred)
@@ -69,14 +69,14 @@ def main():
                 lowest_mse = mse
 
         # Make final prediction
-        model = PolynomialRidgeRegression(degree=DEGREE, reg_factor=best_reg_factor, learning_rate=LEARNING_RATE, n_iterations=N_ITERATIONS)
+        model = PolynomialRidgeRegression(degree=DEGREE, reg_factor=best_reg_factor, lr=LEARNING_RATE, n_iter=N_ITERATIONS)
 
         model.fit(X_train, y_train)
         y_pred = model.predict(X_test)
         mse = mean_squared_error(y_test, y_pred)
         print("Valid \tMSE: %.2f @ Reg: %.2f" % (mse, best_reg_factor))
     else:
-        model = PolynomialRegression(degree=DEGREE, learning_rate=LEARNING_RATE, n_iterations=N_ITERATIONS)
+        model = PolynomialRegression(degree=DEGREE, lr=LEARNING_RATE, n_iter=N_ITERATIONS)
         model.fit(X_train, y_train)
         y_pred = model.predict(X_test)
         mse = mean_squared_error(y_test, y_pred)

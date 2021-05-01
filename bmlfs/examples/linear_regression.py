@@ -33,8 +33,8 @@ def main():
                                                         test_size=0.4,
                                                         seed=SEED)
 
-    model = LinearRegression(n_iterations=EPOCH,
-                             learning_rate=LEARNING_RATE,
+    model = LinearRegression(n_iter=EPOCH,
+                             lr=LEARNING_RATE,
                              gradient_descent=GRADIENT)
 
     model.fit(X_train, y_train)
