@@ -2,18 +2,18 @@ import math
 
 import numpy as np
 
-from bmlfs.utils import normalize, polynomial_features, make_diagonal
 from bmlfs.deep_learning import Sigmoid
+from bmlfs.utils import normalize, polynomial_features
 
 
 class l1_regulation():
     """ Regularization for Lasso Regression """
-
     def __init__(self, alpha):
         self.alpha = alpha
 
     def __call__(self, w):
-        return self.alpha * np.linalg.norm(w, 1)  # np.max(np.sum(np.abs(w), axis=0))
+        return self.alpha * np.linalg.norm(
+            w, 1)  # np.max(np.sum(np.abs(w), axis=0))
 
     def grad(self, w):
         return self.alpha * np.sign(w)
@@ -21,7 +21,6 @@ class l1_regulation():
 
 class l2_regularization():
     """ Regularization for Ridge Regression """
-
     def __init__(self, alpha):
         self.alpha = alpha
 
@@ -41,10 +40,10 @@ class Regression(object):
     lr: float
         The step length that will be used when updating the weights.
     """
-
-    def __init__(self, n_iter=100, lr=0.001):
+    def __init__(self, n_iter=100, lr=0.001, gradient=True):
         self.n_iter = n_iter
         self.lr = lr
+        self.gradient = gradient
 
     def initialize_weights(self, n_features):
         """ Initialize weights randomly using Xavier Initialization method [-1/N, 1/N] """
@@ -59,15 +58,28 @@ class Regression(object):
         self.m, self.n = X_b.shape
 
         # Do gradient descent for n_iterations
-        for _ in range(self.n_iter):
-            y_pred = X_b @ self.w
-            # Calculate l2 loss
-            mse = np.mean(0.5 * (y - y_pred)**2)
-            self.training_errors.append(mse)
-            # Gradient of l2 loss w.r.t w
-            grad_w = 2 / self.m * X_b.T @ (y_pred - y)
-            # Update the weights
-            self.w -= self.lr * grad_w
+        if self.gradient:
+            for _ in range(self.n_iter):
+                y_pred = X_b @ self.w
+                # Calculate l2 loss
+                mse = np.mean(0.5 * (y - y_pred)**2)
+                self.training_errors.append(mse)
+                # Gradient of l2 loss w.r.t w
+                grad_w = 2 / self.m * X_b.T @ (y_pred - y)
+                # Update the weights
+                self.w -= self.lr * grad_w
+        else:
+            # If not gradient => Least squares approximation of w
+            # https://www.youtube.com/watch?v=ZUU57Q3CFOU - Four Ways to Solve Least Squares Problems by Prof. William Gilbert Strang
+            # https://www.youtube.com/watch?v=PjeOmOz9jSY&t=139s - Linear Systems of Equations, Least Squares Regression, Pseudoinverse by Steve Brunton
+            # https://www.youtube.com/watch?v=02QCtHM1qb4 - Least Squares Regression and the SVD by Steve Brunton
+            X_b = np.insert(X, 0, 1, axis=1)
+            # Calculate weights by least squares (using Moore-Penrose pseudoinverse)
+            # X @ w = y --> w = X_pin @ y
+            # X_pinv = inv(X.T @ X) @ X.T
+            # Normal Equations: w = inv(X.T @ X) @ X.T @ y
+            X_pin = np.linalg.pinv(X_b)
+            self.w = X_pin @ y
 
     def predict(self, X):
         # Insert constant ones for bias weights
@@ -84,35 +96,16 @@ class LinearRegression(Regression):
         The number of training iterations the algorithm will tune the weights for.
     lr: float
         The step length that will be used when updating the weights.
-    gradient_descent: boolean
+    gradient: boolean
         True or false depending if gradient descent should be used when training. If false then we use batch optimization by least squares.
     """
-
-    def __init__(self,
-                 n_iter=100,
-                 lr=0.001,
-                 gradient_descent=True):
-        self.gradient_descent = gradient_descent
+    def __init__(self, **kwargs):
         self.regularization = lambda _: 0
         self.regularization.grad = lambda _: 0
-        super(LinearRegression, self).__init__(n_iter=n_iter,
-                                               lr=lr)
+        super(LinearRegression, self).__init__(**kwargs)
 
     def fit(self, X, y):
-        # If not gradient_descent => Least squares approximation of w
-        # https://www.youtube.com/watch?v=ZUU57Q3CFOU - Four Ways to Solve Least Squares Problems by Prof. William Gilbert Strang
-        # https://www.youtube.com/watch?v=PjeOmOz9jSY&t=139s - Linear Systems of Equations, Least Squares Regression, Pseudoinverse by Steve Brunton
-        # https://www.youtube.com/watch?v=02QCtHM1qb4 - Least Squares Regression and the SVD by Steve Brunton
-        if not self.gradient_descent:
-            X_b = np.insert(X, 0, 1, axis=1)
-            # Calculate weights by least squares (using Moore-Penrose pseudoinverse)
-            # X @ w = y --> w = X_pin @ y
-            # X_pinv = inv(X.T @ X) @ X.T
-            # Normal Equations: w = inv(X.T @ X) @ X.T @ y
-            X_pin = np.linalg.pinv(X_b)
-            self.w = X_pin @ y
-        else:
-            super(LinearRegression, self).fit(X, y)
+        super(LinearRegression, self).fit(X, y)
 
 
 class PolynomialRegression(Regression):
@@ -127,14 +120,12 @@ class PolynomialRegression(Regression):
     lr: float
         The step length that will be used when updating the weights.
     """
-
-    def __init__(self, degree, n_iter=3000, lr=0.001):
+    def __init__(self, degree, **kwargs):
         self.degree = degree
         # No regularization
-        self.regularization = lambda x: 0
-        self.regularization.grad = lambda x: 0
-        super(PolynomialRegression, self).__init__(n_iter=n_iter,
-                                                   lr=lr)
+        self.regularization = lambda _: 0
+        self.regularization.grad = lambda _: 0
+        super(PolynomialRegression, self).__init__(**kwargs)
 
     def fit(self, X, y):
         X = polynomial_features(X, degree=self.degree)
@@ -157,10 +148,9 @@ class RidgeRegression(Regression):
     lr: float
         The step length that will be used when updating the weights.
     """
-
-    def __init__(self, reg_factor, n_iter=1000, lr=0.001):
+    def __init__(self, reg_factor, **kwargs):
         self.regularization = l2_regularization(alpha=reg_factor)
-        super(RidgeRegression, self).__init__(n_iter, lr)
+        super(RidgeRegression, self).__init__(**kwargs)
 
 
 class PolynomialRidgeRegression(Regression):
@@ -176,17 +166,10 @@ class PolynomialRidgeRegression(Regression):
     lr: float
         The step length that will be used when updating the weights.
     """
-
-    def __init__(self,
-                 degree,
-                 reg_factor,
-                 n_iter=3000,
-                 lr=0.01,
-                 gradient_descent=True):
+    def __init__(self, degree, reg_factor, **kwargs):
         self.degree = degree
         self.regularization = l2_regularization(alpha=reg_factor)
-        super(PolynomialRidgeRegression,
-              self).__init__(n_iter, lr)
+        super(PolynomialRidgeRegression, self).__init__(**kwargs)
 
     def fit(self, X, y):
         X = normalize(polynomial_features(X, degree=self.degree))
@@ -197,7 +180,7 @@ class PolynomialRidgeRegression(Regression):
         return super(PolynomialRidgeRegression, self).predict(X)
 
 
-class LogisticRegression():
+class LogisticRegression(Regression):
     """ Logistic Regression classifier.
     Parameters:
     -----------
@@ -205,12 +188,10 @@ class LogisticRegression():
         The step length that will be taken when following the negative gradient during
         training.
     """
-
-    def __init__(self, lr=0.1, n_iter=100000, verbose=False):
-        self.w = None
-        self.lr = lr
-        self.n_iter = n_iter
-        self.verbose = verbose
+    def __init__(self):
+        super(LogisticRegression, self).__init__(lr=0.1,
+                                                 n_iter=100000,
+                                                 gradient=False)
 
     def __sigmoid(self, z):
         sigmoid = Sigmoid()
@@ -218,22 +199,16 @@ class LogisticRegression():
 
     def fit(self, X, y):
         X_b = np.insert(X, 0, 1, axis=1)
-
-        # Initialize weights
-        self.w = np.zeros(X_b.shape[1])
+        self.initialize_weights(X_b.shape[1])
 
         # Tune parameters for n iterations
-        for i in range(self.n_iter):
+        for _ in range(self.n_iter):
             # Make a new prediction
             y_pred = self.__sigmoid(X_b @ self.w)
             # Move against the gradient of the loss function with
             # respect to the parameters to minimize the loss
             grad_w = ((y_pred - y) @ X_b) / y.size
             self.w -= self.lr * grad_w
-
-            if (self.verbose == True and i % 1000 == 0):
-                y_pred = self.__sigmoid(X_b @ self.w)
-                print(f'loss: {y_pred} \t')
 
     def predict_proba(self, X):
         X_b = np.insert(X, 0, 1, axis=1)

@@ -86,14 +86,6 @@ def k_fold_cross_validation_sets(X, y, n_fold, shuffle=True, seed=None):
     return np.array(sets, dtype=object)
 
 
-def make_diagonal(x):
-    """ Converts a vector into an diagonal matrix """
-    m = np.zeros((len(x), len(x)))
-    for i in range(len(m[0])):
-        m[i, i] = x[i]
-    return m
-
-
 def train_test_split(X, y, test_size=0.5, shuffle=True, seed=None):
     """ Split the data into train and test sets """
     if shuffle:
@@ -111,11 +103,3 @@ def mean_squared_error(y_true, y_pred):
     """ Returns the mean squared error between y_pred and y_true """
     mse = np.mean((y_true - y_pred)**2)
     return mse
-
-
-def make_diagonal(x):
-    """ Converts a vector into an diagonal matrix """
-    m = np.zeros((len(x), len(x)))
-    for i in range(len(m[0])):
-        m[i, i] = x[i]
-    return m

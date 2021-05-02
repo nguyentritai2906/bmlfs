@@ -1,0 +1,160 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+DEGREE	bmlfs/examples/polynomial_regression.py	/^DEGREE = 15$/;"	v
+EPOCH	bmlfs/examples/linear_regression.py	/^EPOCH = 300$/;"	v
+GRADIENT	bmlfs/examples/linear_regression.py	/^GRADIENT = True$/;"	v
+GRADIENT	bmlfs/examples/polynomial_regression.py	/^GRADIENT = False$/;"	v
+LEARNING_RATE	bmlfs/examples/linear_regression.py	/^LEARNING_RATE = 0.01$/;"	v
+LEARNING_RATE	bmlfs/examples/polynomial_regression.py	/^LEARNING_RATE = 0.1$/;"	v
+LinearRegression	bmlfs/examples/linear_regression.py	/^from bmlfs.supervised_learning.regression import LinearRegression$/;"	i
+LinearRegression	bmlfs/supervised_learning/regression.py	/^class LinearRegression(Regression):$/;"	c
+LogisticRegression	bmlfs/examples/logistic_regression.py	/^from bmlfs.supervised_learning import LogisticRegression$/;"	i
+LogisticRegression	bmlfs/supervised_learning/regression.py	/^class LogisticRegression():$/;"	c
+N_FOLD	bmlfs/examples/polynomial_regression.py	/^N_FOLD = 5$/;"	v
+N_ITERATIONS	bmlfs/examples/polynomial_regression.py	/^N_ITERATIONS = 100000$/;"	v
+PolynomialRegression	bmlfs/examples/polynomial_regression.py	/^from bmlfs.supervised_learning.regression import PolynomialRegression, PolynomialRidgeRegression$/;"	i
+PolynomialRegression	bmlfs/supervised_learning/regression.py	/^class PolynomialRegression(Regression):$/;"	c
+PolynomialRidgeRegression	bmlfs/examples/polynomial_regression.py	/^from bmlfs.supervised_learning.regression import PolynomialRegression, PolynomialRidgeRegression$/;"	i
+PolynomialRidgeRegression	bmlfs/supervised_learning/regression.py	/^class PolynomialRidgeRegression(Regression):$/;"	c
+REGULARIZE	bmlfs/examples/polynomial_regression.py	/^REGULARIZE = False$/;"	v
+REG_RANGE	bmlfs/examples/polynomial_regression.py	/^REG_RANGE = [0, 0.1, 0.01]$/;"	v
+Regression	bmlfs/supervised_learning/regression.py	/^class Regression(object):$/;"	c
+RidgeRegression	bmlfs/supervised_learning/regression.py	/^class RidgeRegression(Regression):$/;"	c
+SEED	bmlfs/examples/linear_regression.py	/^SEED = 42$/;"	v
+SEED	bmlfs/examples/logistic_regression.py	/^SEED = 42$/;"	v
+SEED	bmlfs/examples/polynomial_regression.py	/^SEED = 42$/;"	v
+Sigmoid	bmlfs/deep_learning/activations.py	/^class Sigmoid():$/;"	c
+Sigmoid	bmlfs/examples/logistic_regression.py	/^from bmlfs.deep_learning import Sigmoid$/;"	i
+Sigmoid	bmlfs/supervised_learning/regression.py	/^from bmlfs.deep_learning import Sigmoid$/;"	i
+Softmax	bmlfs/deep_learning/activations.py	/^class Softmax():$/;"	c
+X	bmlfs/examples/logistic_regression.py	/^X = iris.data[:, 3:]  # petal width$/;"	v
+X	bmlfs/examples/polynomial_regression.py	/^X = time$/;"	v
+X_new	bmlfs/examples/logistic_regression.py	/^X_new = np.array([[1.7], [1.5]])$/;"	v
+__call__	bmlfs/deep_learning/activations.py	/^    def __call__(self, x):$/;"	m	class:Sigmoid	file:
+__call__	bmlfs/deep_learning/activations.py	/^    def __call__(self, x):$/;"	m	class:Softmax	file:
+__call__	bmlfs/supervised_learning/regression.py	/^    def __call__(self, w):$/;"	m	class:l1_regulation	file:
+__call__	bmlfs/supervised_learning/regression.py	/^    def __call__(self, w):$/;"	m	class:l2_regularization	file:
+__init__	bmlfs/supervised_learning/regression.py	/^    def __init__(self, alpha):$/;"	m	class:l1_regulation
+__init__	bmlfs/supervised_learning/regression.py	/^    def __init__(self, alpha):$/;"	m	class:l2_regularization
+__init__	bmlfs/supervised_learning/regression.py	/^    def __init__(self, degree, n_iter=3000, lr=0.001, gradient_descent=True):$/;"	m	class:PolynomialRegression
+__init__	bmlfs/supervised_learning/regression.py	/^    def __init__(self, lr=0.1, n_iter=100000, verbose=False):$/;"	m	class:LogisticRegression
+__init__	bmlfs/supervised_learning/regression.py	/^    def __init__(self, n_iter=100, lr=0.001, gradient_descent=True):$/;"	m	class:Regression
+__init__	bmlfs/supervised_learning/regression.py	/^    def __init__(self, reg_factor, n_iter=1000, lr=0.001):$/;"	m	class:RidgeRegression
+__init__	bmlfs/supervised_learning/regression.py	/^    def __init__(self,$/;"	m	class:LinearRegression
+__init__	bmlfs/supervised_learning/regression.py	/^    def __init__(self,$/;"	m	class:PolynomialRidgeRegression
+__sigmoid	bmlfs/supervised_learning/regression.py	/^    def __sigmoid(self, z):$/;"	m	class:LogisticRegression	file:
+_mse	bmlfs/examples/polynomial_regression.py	/^            _mse = mean_squared_error(_y_test, y_pred)$/;"	v
+accuracy	bmlfs/examples/logistic_regression.py	/^accuracy = accuracy_score(y_test, y_pred)$/;"	v
+accuracy_score	bmlfs/examples/logistic_regression.py	/^from bmlfs.utils import make_diagonal, normalize, train_test_split, accuracy_score$/;"	i
+accuracy_score	bmlfs/utils/data_operation.py	/^def accuracy_score(y_true, y_pred):$/;"	f
+argparse	bmlfs/examples/polynomial_regression.py	/^import argparse$/;"	i
+best_reg_factor	bmlfs/examples/polynomial_regression.py	/^            best_reg_factor = reg_factor$/;"	v
+best_reg_factor	bmlfs/examples/polynomial_regression.py	/^    best_reg_factor = None$/;"	v
+cmap	bmlfs/examples/linear_regression.py	/^cmap = plt.get_cmap('viridis')  # Color map$/;"	v
+cmap	bmlfs/examples/polynomial_regression.py	/^cmap = plt.get_cmap('viridis')  # Color map$/;"	v
+color	bmlfs/examples/linear_regression.py	/^         color='black',$/;"	v
+combinations_with_replacement	bmlfs/utils/data_manipulation.py	/^from itertools import combinations_with_replacement$/;"	i
+cross_validation_sets	bmlfs/examples/polynomial_regression.py	/^        cross_validation_sets = k_fold_cross_validation_sets(X_train, y_train, n_fold=N_FOLD)$/;"	v
+data	bmlfs/examples/polynomial_regression.py	/^data = pd.read_csv(os.path.join(dir_name, '..\/data\/TempLinkoping2016.txt'), sep="\\t")$/;"	v
+datasets	bmlfs/examples/logistic_regression.py	/^from sklearn import datasets$/;"	i
+dir_name	bmlfs/examples/polynomial_regression.py	/^dir_name = os.path.dirname(__file__)$/;"	v
+find_packages	setup.py	/^from setuptools import setup, find_packages$/;"	i
+fit	bmlfs/supervised_learning/regression.py	/^    def fit(self, X, y):$/;"	m	class:LinearRegression
+fit	bmlfs/supervised_learning/regression.py	/^    def fit(self, X, y):$/;"	m	class:LogisticRegression
+fit	bmlfs/supervised_learning/regression.py	/^    def fit(self, X, y):$/;"	m	class:PolynomialRegression
+fit	bmlfs/supervised_learning/regression.py	/^    def fit(self, X, y):$/;"	m	class:PolynomialRidgeRegression
+fit	bmlfs/supervised_learning/regression.py	/^    def fit(self, X, y):$/;"	m	class:Regression
+grad	bmlfs/supervised_learning/regression.py	/^    def grad(self, w):$/;"	m	class:l1_regulation
+grad	bmlfs/supervised_learning/regression.py	/^    def grad(self, w):$/;"	m	class:l2_regularization
+gradient	bmlfs/deep_learning/activations.py	/^    def gradient(self, x):$/;"	m	class:Sigmoid
+gradient	bmlfs/deep_learning/activations.py	/^    def gradient(self, x):$/;"	m	class:Softmax
+gradient_descent	bmlfs/examples/linear_regression.py	/^                         gradient_descent=GRADIENT)$/;"	v
+index_combinations	bmlfs/utils/data_manipulation.py	/^    def index_combinations():$/;"	f	function:polynomial_features
+initialize_weights	bmlfs/supervised_learning/regression.py	/^    def initialize_weights(self, n_features):$/;"	m	class:Regression
+iris	bmlfs/examples/logistic_regression.py	/^iris = datasets.load_iris()$/;"	v
+k_fold_cross_validation_sets	bmlfs/examples/polynomial_regression.py	/^from bmlfs.utils.data_manipulation import k_fold_cross_validation_sets$/;"	i
+k_fold_cross_validation_sets	bmlfs/utils/data_manipulation.py	/^def k_fold_cross_validation_sets(X, y, n_fold, shuffle=True, seed=None):$/;"	f
+l1_regulation	bmlfs/supervised_learning/regression.py	/^class l1_regulation():$/;"	c
+l2_regularization	bmlfs/supervised_learning/regression.py	/^class l2_regularization():$/;"	c
+label	bmlfs/examples/linear_regression.py	/^                         label="Training Error")$/;"	v
+label	bmlfs/examples/linear_regression.py	/^         label="Prediction")$/;"	v
+linewidth	bmlfs/examples/linear_regression.py	/^         linewidth=2,$/;"	v
+lowest_mse	bmlfs/examples/polynomial_regression.py	/^            lowest_mse = mse$/;"	v
+lowest_mse	bmlfs/examples/polynomial_regression.py	/^    lowest_mse = float("inf")$/;"	v
+lr	bmlfs/examples/linear_regression.py	/^                         lr=LEARNING_RATE,$/;"	v
+m1	bmlfs/examples/linear_regression.py	/^m1 = plt.scatter(366 * X_train, y_train, color=cmap(0.9), s=10)$/;"	v
+m1	bmlfs/examples/polynomial_regression.py	/^m1 = plt.scatter(len(time) * X_train, y_train, color=cmap(0.9), s=10)$/;"	v
+m2	bmlfs/examples/linear_regression.py	/^m2 = plt.scatter(366 * X_test, y_test, color=cmap(0.5), s=10)$/;"	v
+m2	bmlfs/examples/polynomial_regression.py	/^m2 = plt.scatter(len(time) * X_test, y_test, color=cmap(0.5), s=10)$/;"	v
+make_diagonal	bmlfs/examples/logistic_regression.py	/^from bmlfs.utils import make_diagonal, normalize, train_test_split, accuracy_score$/;"	i
+make_diagonal	bmlfs/supervised_learning/regression.py	/^from bmlfs.utils import normalize, polynomial_features, make_diagonal$/;"	i
+make_diagonal	bmlfs/utils/data_manipulation.py	/^def make_diagonal(x):$/;"	f
+make_regression	bmlfs/examples/linear_regression.py	/^from sklearn.datasets import make_regression$/;"	i
+make_regression	bmlfs/examples/polynomial_regression.py	/^from sklearn.datasets import make_regression$/;"	i
+math	bmlfs/examples/logistic_regression.py	/^import math$/;"	i
+math	bmlfs/examples/polynomial_regression.py	/^import math$/;"	i
+math	bmlfs/supervised_learning/regression.py	/^import math$/;"	i
+matplotlib	bmlfs/examples/linear_regression.py	/^import matplotlib.pyplot as plt$/;"	i
+matplotlib	bmlfs/examples/logistic_regression.py	/^import matplotlib.pyplot as plt$/;"	i
+matplotlib	bmlfs/examples/polynomial_regression.py	/^import matplotlib.pyplot as plt$/;"	i
+mean_squared_error	bmlfs/examples/linear_regression.py	/^from bmlfs.utils.data_operation import mean_squared_error, train_test_split$/;"	i
+mean_squared_error	bmlfs/examples/polynomial_regression.py	/^from bmlfs.utils.data_operation import mean_squared_error, train_test_split$/;"	i
+mean_squared_error	bmlfs/utils/data_manipulation.py	/^def mean_squared_error(y_true, y_pred):$/;"	f
+mean_squared_error	bmlfs/utils/data_operation.py	/^def mean_squared_error(y_true, y_pred):$/;"	f
+model	bmlfs/examples/linear_regression.py	/^model = LinearRegression(n_iter=EPOCH,$/;"	v
+model	bmlfs/examples/logistic_regression.py	/^model = LogisticRegression()$/;"	v
+model	bmlfs/examples/polynomial_regression.py	/^            model = PolynomialRidgeRegression(degree=DEGREE, reg_factor=reg_factor, lr=LEARNING_RATE, n_iter=N_ITERATIONS)$/;"	v
+model	bmlfs/examples/polynomial_regression.py	/^    model = PolynomialRegression(degree=DEGREE, lr=LEARNING_RATE, n_iter=N_ITERATIONS, gradient_descent=GRADIENT)$/;"	v
+model	bmlfs/examples/polynomial_regression.py	/^    model = PolynomialRidgeRegression(degree=DEGREE, reg_factor=best_reg_factor, lr=LEARNING_RATE, n_iter=N_ITERATIONS)$/;"	v
+mse	bmlfs/examples/linear_regression.py	/^mse = mean_squared_error(y_test, y_pred)$/;"	v
+mse	bmlfs/examples/polynomial_regression.py	/^        mse = 0$/;"	v
+mse	bmlfs/examples/polynomial_regression.py	/^    mse = mean_squared_error(y_test, y_pred)$/;"	v
+n	bmlfs/examples/linear_regression.py	/^    n = len(model.training_errors)$/;"	v
+n_features	bmlfs/examples/linear_regression.py	/^                       n_features=1,$/;"	v
+noise	bmlfs/examples/linear_regression.py	/^                       noise=20,$/;"	v
+normalize	bmlfs/examples/logistic_regression.py	/^from bmlfs.utils import make_diagonal, normalize, train_test_split, accuracy_score$/;"	i
+normalize	bmlfs/supervised_learning/regression.py	/^from bmlfs.utils import normalize, polynomial_features, make_diagonal$/;"	i
+normalize	bmlfs/utils/data_manipulation.py	/^def normalize(X, axis=-1, order=2):$/;"	f
+np	bmlfs/deep_learning/activations.py	/^import numpy as np$/;"	i
+np	bmlfs/examples/logistic_regression.py	/^import numpy as np$/;"	i
+np	bmlfs/examples/polynomial_regression.py	/^import numpy as np$/;"	i
+np	bmlfs/supervised_learning/regression.py	/^import numpy as np$/;"	i
+np	bmlfs/utils/data_manipulation.py	/^import numpy as np$/;"	i
+np	bmlfs/utils/data_operation.py	/^import numpy as np$/;"	i
+os	bmlfs/examples/polynomial_regression.py	/^import os$/;"	i
+pd	bmlfs/examples/polynomial_regression.py	/^import pandas as pd$/;"	i
+plt	bmlfs/examples/linear_regression.py	/^import matplotlib.pyplot as plt$/;"	i
+plt	bmlfs/examples/logistic_regression.py	/^import matplotlib.pyplot as plt$/;"	i
+plt	bmlfs/examples/polynomial_regression.py	/^import matplotlib.pyplot as plt$/;"	i
+polynomial_features	bmlfs/supervised_learning/regression.py	/^from bmlfs.utils import normalize, polynomial_features, make_diagonal$/;"	i
+polynomial_features	bmlfs/utils/data_manipulation.py	/^def polynomial_features(X, degree):$/;"	f
+predict	bmlfs/supervised_learning/regression.py	/^    def predict(self, X):$/;"	m	class:LogisticRegression
+predict	bmlfs/supervised_learning/regression.py	/^    def predict(self, X):$/;"	m	class:PolynomialRegression
+predict	bmlfs/supervised_learning/regression.py	/^    def predict(self, X):$/;"	m	class:PolynomialRidgeRegression
+predict	bmlfs/supervised_learning/regression.py	/^    def predict(self, X):$/;"	m	class:Regression
+predict_proba	bmlfs/supervised_learning/regression.py	/^    def predict_proba(self, X):$/;"	m	class:LogisticRegression
+random_state	bmlfs/examples/linear_regression.py	/^                       random_state=SEED)$/;"	v
+seed	bmlfs/examples/linear_regression.py	/^                                                    seed=SEED)$/;"	v
+setup	setup.py	/^from setuptools import setup, find_packages$/;"	i
+shuffle_data	bmlfs/utils/data_manipulation.py	/^def shuffle_data(X, y, seed=None):$/;"	f
+shuffle_data	bmlfs/utils/data_operation.py	/^def shuffle_data(X, y, seed=None):$/;"	f
+temp	bmlfs/examples/polynomial_regression.py	/^temp = data['temp'].values$/;"	v
+test_size	bmlfs/examples/linear_regression.py	/^                                                    test_size=0.4,$/;"	v
+time	bmlfs/examples/polynomial_regression.py	/^time = np.atleast_2d(data['time'].values).T$/;"	v
+train_test_split	bmlfs/examples/linear_regression.py	/^from bmlfs.utils.data_operation import mean_squared_error, train_test_split$/;"	i
+train_test_split	bmlfs/examples/logistic_regression.py	/^from bmlfs.utils import make_diagonal, normalize, train_test_split, accuracy_score$/;"	i
+train_test_split	bmlfs/examples/polynomial_regression.py	/^from bmlfs.utils.data_operation import mean_squared_error, train_test_split$/;"	i
+train_test_split	bmlfs/utils/data_manipulation.py	/^def train_test_split(X, y, test_size=0.5, shuffle=True, seed=None):$/;"	f
+train_test_split	bmlfs/utils/data_operation.py	/^def train_test_split(X, y, test_size=0.5, shuffle=True, seed=None):$/;"	f
+y	bmlfs/examples/logistic_regression.py	/^y = (iris.target == 2).astype(int)$/;"	v
+y	bmlfs/examples/polynomial_regression.py	/^y = temp$/;"	v
+y_pred	bmlfs/examples/linear_regression.py	/^y_pred = model.predict(X_test)$/;"	v
+y_pred	bmlfs/examples/logistic_regression.py	/^y_pred = model.predict(X_test)$/;"	v
+y_pred	bmlfs/examples/polynomial_regression.py	/^            y_pred = model.predict(_X_test)$/;"	v
+y_pred	bmlfs/examples/polynomial_regression.py	/^    y_pred = model.predict(X_test)$/;"	v
+y_pred_line	bmlfs/examples/linear_regression.py	/^y_pred_line = model.predict(X)$/;"	v
+y_pred_line	bmlfs/examples/polynomial_regression.py	/^y_pred_line = model.predict(X)$/;"	v
