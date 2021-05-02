@@ -188,10 +188,8 @@ class LogisticRegression(Regression):
         The step length that will be taken when following the negative gradient during
         training.
     """
-    def __init__(self):
-        super(LogisticRegression, self).__init__(lr=0.1,
-                                                 n_iter=100000,
-                                                 gradient=False)
+    def __init__(self, lr=0.1, **kwargs):
+        super(LogisticRegression, self).__init__(lr=lr, **kwargs)
 
     def __sigmoid(self, z):
         sigmoid = Sigmoid()
