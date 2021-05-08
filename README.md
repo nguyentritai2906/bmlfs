@@ -7,11 +7,11 @@ The purpose of this project is to gain a deeper understanding of how
 the algorithms works and the mathematics intuition behind it.
 
 ## Algorithms implemented so far
-- Linear Regression
-- Polynomial Ridge Regression
+- [Linear Regression](https://nguyentritai.tk/posts/2020/linear-regression/)
+- Polynomial Regression
 - Logistic Regression
 
-## Resources
+## References
 - [Coursera Deep Learning Specialization by Andrew Ng](https://www.coursera.org/specializations/deep-learning)
 - [Hands-on Machine Learning with Scikit-Learn, Keras & TensorFlow by Aurélien Géron](https://github.com/ageron/handson-ml2)
 - [Deep Learning with Python by François Chollet](https://github.com/fchollet/deep-learning-with-python-notebooks)
