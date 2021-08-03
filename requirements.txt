@@ -1,4 +1,3 @@
--e git+git@github.com:nguyentritai2906/bmlfs.git@e059b6b25e703fe844248e039641767aca83b3e7#egg=bmlfs
 cycler==0.10.0
 joblib==1.0.1
 kiwisolver==1.3.1
